@@ -1,0 +1,14 @@
+
+<nav>
+  <a routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</a>
+  <a routerLink="/login" routerLinkActive="active" *ngIf="!loggedIn">Login</a>
+  <a routerLink="/register" routerLinkActive="active" *ngIf="!loggedIn">Register</a>
+
+  <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Home</a>
+  <a routerLink="#" routerLinkActive="active" *ngIf="loggedIn">Expenses</a>
+  <a routerLink="#" routerLinkActive="active" *ngIf="loggedIn">Settings</a>
+  
+  
+  <a id="logout" routerLink="" routerLinkActive="active" *ngIf="loggedIn" (click)="logout()">Logout</a>
+  
+</nav>

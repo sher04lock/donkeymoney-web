@@ -1,0 +1,34 @@
+/* AppComponent's private CSS styles */
+
+  .bg-donkey { 
+    /* The image used */
+    background-image: url("../assets/images/bg-donkey.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    z-index: -100;
+}
+
+#footer {
+    position:fixed;
+    bottom:0;
+    left: 0;
+    width:100%;
+    height:25px;   /* Height of the footer */
+    background-color:rgba(24, 24, 24, 0.8);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 25px;  
+    color: #ffffff  
+ }
