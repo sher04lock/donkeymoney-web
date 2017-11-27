@@ -1,27 +1,36 @@
 <div class="row">
   <div class="col-md-4 box">
-    <h1>Register</h1>
+    <h1>Register TODO: email validation</h1>
     <hr>
     <br>
-    <form (ngSubmit)="onRegister()" novalidate>
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm">
       <div class="form-group">
-        <label for="name">name</label>
-        <input type="text" class="form-control" id="name" placeholder="enter name" [(ngModel)]="user.name" name="name" required>
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="enter name" [(ngModel)]="user.name" name="name">
       </div>
       <div class="form-group">
-        <label for="last_name">Email</label>
-        <input type="text" class="form-control" id="last_name" placeholder="enter last_name" [(ngModel)]="user.last_name" name="last_name" required>
+        <label for="last_name">Last name</label>
+        <input type="text" class="form-control" id="last_name" placeholder="enter last name" [(ngModel)]="user.last_name" name="last_name">
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input required  type="text" class="form-control" id="email" placeholder="enter email" [(ngModel)]="user.email" name="email" required>
+        <input required type="text" class="form-control" id="email" placeholder="enter email" [(ngModel)]="user.email" name="email"
+          #email="ngModel">
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+          Email is required
+        </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input required  type="password" class="form-control" id="password" placeholder="enter password" [(ngModel)]="user.password" name="password"
-          required>
+        <input required type="password" class="form-control" id="password" placeholder="enter password" [(ngModel)]="user.password"
+          name="password" #password="ngModel">
+        <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+          Password is required
+        </div>
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid">Submit</button>
+      <img *ngIf="pendingRequest" src="{{loadingGif}}" />
     </form>
+    <br>
   </div>
 </div>
