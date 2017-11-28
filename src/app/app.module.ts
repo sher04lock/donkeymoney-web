@@ -15,8 +15,12 @@ import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
-
-
+import { OperationsComponent } from './operations/operations.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ClientPagingComponent } from './client-paging/client-paging.component';
+import { DevtableComponent } from './devtable/devtable.component';
+import { DevService } from './dev-service.service';
+import { DxDataGridModule, DxButtonModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [
@@ -26,15 +30,21 @@ import { MessageService } from './message.service';
     DashboardComponent,
     HomeComponent,
     NavigationComponent,
-    MessagesComponent
+    MessagesComponent,
+    OperationsComponent,
+    ClientPagingComponent,
+    DevtableComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxDatatableModule,
+    DxDataGridModule,
+    DxButtonModule
   ],
-  providers: [AuthenticationService, AuthGuardService, MessageService],
+  providers: [AuthenticationService, AuthGuardService, MessageService, DevService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
