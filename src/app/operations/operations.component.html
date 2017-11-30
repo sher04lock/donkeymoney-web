@@ -1,3 +1,72 @@
-<ngx-datatable class="material"
-  [rows]="rows" [columns]="columns">
-</ngx-datatable>
+<div class="container" style="background-color: white; margin-top: 20px">
+  <div class="col-md-12">
+    <h1>Your expenses</h1>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">Amount</th>
+          <th class="text-center">Description</th>
+          <th class="text-center">Date</th>
+          <th class="text-center">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operation of operations">
+          <td class="col-md-1">{{ operation.id }}</td>
+          <td class="col-md-1">{{ operation.amount | currency:'PLN':true:'1.0-2' }}</td>
+          <td class="col-md-4">{{ operation.description }}</td>
+          <td class="col-md-1">{{ operation.date }}</td>
+          <td class="col-md-1">
+            <button class="btn btn-info" (click)="showEditOperationForm(operation)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="removeOperation(operation)">
+              <i class="fa fa-minus"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn btn-success" (click)="showAddOperationForm()">
+      <i class="fa fa-plus"></i>
+    </button>
+    <br />
+    <br />
+
+    <form *ngIf="operationForm">
+      <h2>Add New Operation</h2>
+      <p>Amount:
+        <input type="text" name="amount" [(ngModel)]="newOperation.amount" />
+      </p>
+      <p>Description:
+        <input type="text" name="description" [(ngModel)]="newOperation.description" />
+      </p>
+      <p>Date:
+        <input type="date" name="date" [(ngModel)]="newOperation.date" />
+      </p>
+      <p>
+        <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Submit</button>
+        <button type="button" class="btn btn-warning" (click)="cancelNewOperation()">Cancel</button>
+      </p>
+    </form>
+
+    <form *ngIf="editOperationForm">
+      <h2>Edit Operation Details</h2>
+      <p>Amount:
+        <input type="text" name="amount" [(ngModel)]="editedOperation.amount" />
+      </p>
+      <p>Description:
+        <input type="text" name="description" [(ngModel)]="editedOperation.description" />
+      </p>
+      <p>Date:
+        <input type="date" name="date" [(ngModel)]="editedOperation.date" />
+      </p>
+      <p>
+        <button type="button" class="btn btn-primary" (click)="updateOperation(editedOperation)">Submit</button>
+        <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+      </p>
+    </form>
+  </div>
+</div>

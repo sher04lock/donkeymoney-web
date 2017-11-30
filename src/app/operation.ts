@@ -1,8 +1,9 @@
 export class Operation {
-    amount: number;
-    description: string;
+    id?: number;
+    amount?: number;
+    description?: string;
     familyId?: string;
     category?: string;
     userId?: string;
-    timestamp?: string;
+    date?: string;
 }

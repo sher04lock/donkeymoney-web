@@ -6,11 +6,9 @@
 
   <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Home</a>
   <a routerLink="/operations" routerLinkActive="active" *ngIf="loggedIn">Operations</a>
-  <a routerLink="/table" routerLinkActive="active" >Table</a>
-  <a routerLink="/devtable" routerLinkActive="active" >DevTable</a>
-  <a routerLink="#" routerLinkActive="active" *ngIf="loggedIn">Settings</a>
+  <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Settings</a>
   
   
-  <a id="logout" routerLink="" routerLinkActive="active" *ngIf="loggedIn" (click)="logout()">Logout</a>
+  <a id="logout" routerLink="/home" routerLinkActive="active" *ngIf="loggedIn" (click)="logout()">Logout</a>
   
 </nav>

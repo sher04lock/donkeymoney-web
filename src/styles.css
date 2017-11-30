@@ -1,9 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
-@import '~@swimlane/ngx-datatable/release/index.css';
-@import '~@swimlane/ngx-datatable/release/themes/material.css';
-@import '~@swimlane/ngx-datatable/release/assets/icons.css';
 
 .box {    
     border-radius: 4px;
@@ -11,3 +8,9 @@
     background-color: rgba(100, 100, 100, 0.7);
     color: #ffffff;
 }
+
+@media (max-width: 1200px) {
+    #searchForm {
+      display: block;
+    }
+  }

@@ -33,6 +33,7 @@
     "core-js": "^2.4.1",
     "devextreme": "^17.2.3",
     "devextreme-angular": "^17.2.3",
+    "font-awesome": "^4.7.0",
     "moment": "^2.19.2",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
