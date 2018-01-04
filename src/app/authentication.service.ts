@@ -18,18 +18,45 @@ const httpOptions = {
 export class AuthenticationService {
 
   private authUrl = 'https://osiol-test.herokuapp.com/login';
+  private securityTokenUrl = "https://donkeymoney.herokuapp.com/api/user/securityToken";
+
+  private authTemplate: string;
   private token: string;
+
+  private securityToken: string;
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private httpClient: HttpClient, private messageService: MessageService) { }
 
   login(user: User) {
     const body = JSON.stringify({ email: user.email, password: user.password });
-    return this.httpClient
-      .post(this.authUrl, body, { ...httpOptions, observe: 'response', responseType: 'text' })
+
+
+
+    // this.getSecurityToken(user).subscribe(token => {
+
+    //   const tokenUrl = `https://eu9.salesforce.com/services/oauth2/token?grant_type=password&\
+    //   client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQ\
+    //   vA7WINR&client_secret=6219607681359612175&\
+    //   username=${user.email}&password=${user.password}${token}`;
+
+
+
+    // });
+    let self = this;
+    return this.getSecurityToken(user).flatMap(token => {
+      // this.securityToken = token;
+      const tokenUrl = `https://eu9.salesforce.com/services/oauth2/token?grant_type=password&\
+      client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQ\
+      vA7WINR&client_secret=6219607681359612175&\
+      username=${user.email}&password=${user.password}${token}`;
+
+      return this.httpClient.post(tokenUrl, body, httpOptions);
+    })
       .pipe(
       tap(response => {
-        this.token = response.headers.get('Authorization');
+        console.log(response);
+        this.token = response.toString();
         if (this.token) {
           // store username and jwt token in local storage to keep user logged in between page refreshes
           localStorage
@@ -41,6 +68,31 @@ export class AuthenticationService {
       }),
       catchError((error: any) => Observable.throw(error.error || 'Server error'))
       );
+
+
+    // return this.httpClient
+    //   .post(this.authUrl, body, { ...httpOptions, observe: 'response', responseType: 'text' })
+    //   .pipe(
+    //   tap(response => {
+    //     this.token = response.headers.get('Authorization');
+    //     if (this.token) {
+    //       // store username and jwt token in local storage to keep user logged in between page refreshes
+    //       localStorage
+    //         .setItem('currentUser', JSON.stringify({ email: user.email, token: this.token }));
+    //       console.log(this.isLoggedIn());
+    //       this.loggedIn.emit(true);
+    //       // return true to indicate successful login
+    //     }
+    //   }),
+    //   catchError((error: any) => Observable.throw(error.error || 'Server error'))
+    //   );
+  }
+
+  private getSecurityToken(user: User) {
+    const body = JSON.stringify({ user });
+    let self = this;
+    return this.httpClient
+      .post<string>(this.securityTokenUrl, body, httpOptions);
   }
 
   register(user: User) {
