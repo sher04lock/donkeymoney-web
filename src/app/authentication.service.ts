@@ -38,9 +38,8 @@ export class AuthenticationService {
       console.log("received token: ");
       console.log(response.body);
       const token = response.body;
-      const tokenUrl = `https://eu9.salesforce.com/services/oauth2/token?grant_type=password&\
-      client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQ\
-      vA7WINR&client_secret=6219607681359612175&\
+      // tslint:disable-next-line:max-line-length
+      const tokenUrl = `https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..3UNitxbLQLxfExl29fGl_FI1zXAj9B1GP2CnxBLnY4AOaCBySAZw7BOhSvm&client_secret=7854954256455050410&\
       username=${user.email}&password=${user.password}${token}`;
 
       return this.httpClient.post(tokenUrl, body, httpOptions);
