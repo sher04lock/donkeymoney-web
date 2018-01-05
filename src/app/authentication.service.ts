@@ -18,8 +18,8 @@ const httpOptions = {
 export class AuthenticationService {
 
   private authUrl = 'https://osiol-test.herokuapp.com/login';
-  // private securityTokenUrl = "https://donkeymoney.herokuapp.com/api/user/securityToken";
-  private securityTokenUrl = "http://localhost:8080/api/user/securityToken";
+  private securityTokenUrl = "https://donkeymoney.herokuapp.com/api/user/securityToken";
+  // private securityTokenUrl = "http://localhost:8080/api/user/securityToken";
 
   private authTemplate: string;
   private token: string;
