@@ -18,7 +18,8 @@ const httpOptions = {
 export class AuthenticationService {
 
   private authUrl = 'https://osiol-test.herokuapp.com/login';
-  private securityTokenUrl = "https://donkeymoney.herokuapp.com/api/user/securityToken";
+  // private securityTokenUrl = "https://donkeymoney.herokuapp.com/api/user/securityToken";
+  private securityTokenUrl = "http://localhost:8080/api/user/securityToken";
 
   private authTemplate: string;
   private token: string;
@@ -31,21 +32,12 @@ export class AuthenticationService {
   login(user: User) {
     const body = JSON.stringify({ email: user.email, password: user.password });
 
-
-
-    // this.getSecurityToken(user).subscribe(token => {
-
-    //   const tokenUrl = `https://eu9.salesforce.com/services/oauth2/token?grant_type=password&\
-    //   client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQ\
-    //   vA7WINR&client_secret=6219607681359612175&\
-    //   username=${user.email}&password=${user.password}${token}`;
-
-
-
-    // });
     let self = this;
-    return this.getSecurityToken(user).flatMap(token => {
+    return this.getSecurityToken(user).flatMap(response => {
       // this.securityToken = token;
+      console.log("received token: ");
+      console.log(response.body);
+      const token = response.body;
       const tokenUrl = `https://eu9.salesforce.com/services/oauth2/token?grant_type=password&\
       client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQ\
       vA7WINR&client_secret=6219607681359612175&\
@@ -55,6 +47,7 @@ export class AuthenticationService {
     })
       .pipe(
       tap(response => {
+        console.log("tapped into repsponse");
         console.log(response);
         this.token = response.toString();
         if (this.token) {
@@ -89,10 +82,10 @@ export class AuthenticationService {
   }
 
   private getSecurityToken(user: User) {
-    const body = JSON.stringify({ user });
+    const body = JSON.stringify({ email: user.email, password: user.password });
     let self = this;
     return this.httpClient
-      .post<string>(this.securityTokenUrl, body, httpOptions);
+      .post(this.securityTokenUrl, body, { ...httpOptions, observe: 'response', responseType: 'text' });
   }
 
   register(user: User) {
