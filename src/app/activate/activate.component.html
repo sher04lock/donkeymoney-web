@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-4 box">
+    <h1>Activate</h1>    
+    <h5>Your security token has been sent via email used in registration. Paste it below to activate your account. </h5>
+    <hr>
+    <br>
+    <form (ngSubmit)="onActivate()" #activateForm="ngForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input required type="text" class="form-control" id="email" placeholder="enter email" [(ngModel)]="user.email" name="email"
+          #email="ngModel">
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+          Email is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input required type="password" class="form-control" id="password" placeholder="enter password" [(ngModel)]="user.password"
+          name="password" #password="ngModel">
+        <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+          Password is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="token">Security token</label>
+        <input required type="text" class="form-control" id="token" placeholder="enter token" [(ngModel)]="securityToken" name="token" #token="ngModel">
+        <div [hidden]="token.valid || token.pristine" class="alert alert-danger">
+          Token is required
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!activateForm.form.valid">Submit</button>
+      <img *ngIf="pendingRequest" src="{{loadingGif}}" />
+    </form>
+    <br>
+  </div>
+</div>

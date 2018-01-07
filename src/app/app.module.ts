@@ -18,6 +18,7 @@ import { MessageService } from './message.service';
 import { OperationsComponent } from './operations/operations.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OperationsService } from './operations.service';
+import { ActivateComponent } from './activate/activate.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { OperationsService } from './operations.service';
     NavigationComponent,
     MessagesComponent,
     OperationsComponent,
+    ActivateComponent,
   ],
   imports: [
     BrowserModule,
