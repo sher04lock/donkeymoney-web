@@ -3,12 +3,6 @@ import { Operation } from '../operation';
 import * as moment from 'moment';
 import { OperationsService } from '../operations.service';
 
-const OPERATIONS: Operation[] = [
-  { amount: 12.00, description: "zapieksy", date: moment().format("HH:mm DD/MM/YYYY") },
-  { amount: 100.12, description: "kosmetyki" },
-  { amount: 15.99, description: "cukierki", date: "czwartek 9:32" },
-  { amount: 25.00, description: "pizza", date: "piatek 1:30" },
-];
 @Component({
   selector: 'app-operations',
   templateUrl: './operations.component.html',
@@ -17,8 +11,7 @@ const OPERATIONS: Operation[] = [
 
 export class OperationsComponent implements OnInit {
 
-  // operations: Operation[];
-  operations = OPERATIONS;
+  operations: Operation[];
 
   operationForm = false;
   editOperationForm = false;
@@ -33,7 +26,8 @@ export class OperationsComponent implements OnInit {
   }
 
   getOperations() {
-    this.operations = this.operationService.getOperationsFromData();
+    this.operationService.getOperations(1, "s", "a")
+      .subscribe(operations => this.operations = operations);
   }
 
   showEditOperationForm(operation: Operation) {

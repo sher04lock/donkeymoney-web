@@ -16,7 +16,7 @@
           <td class="col-md-1">{{ operation.id }}</td>
           <td class="col-md-1">{{ operation.amount | currency:'PLN':true:'1.0-2' }}</td>
           <td class="col-md-4">{{ operation.description }}</td>
-          <td class="col-md-1">{{ operation.date }}</td>
+          <td class="col-md-1">{{ operation.createdAt }}</td>
           <td class="col-md-1">
             <button class="btn btn-info" (click)="showEditOperationForm(operation)">
               <i class="fa fa-edit"></i>
@@ -44,7 +44,7 @@
         <input type="text" name="description" [(ngModel)]="newOperation.description" />
       </p>
       <p>Date:
-        <input type="date" name="date" [(ngModel)]="newOperation.date" />
+        <input type="text" name="createdAt" [(ngModel)]="newOperation.createdAt" />
       </p>
       <p>
         <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Submit</button>
@@ -61,7 +61,7 @@
         <input type="text" name="description" [(ngModel)]="editedOperation.description" />
       </p>
       <p>Date:
-        <input type="date" name="date" [(ngModel)]="editedOperation.date" />
+        <input type="text" name="createdAt" [(ngModel)]="editedOperation.createdAt" />
       </p>
       <p>
         <button type="button" class="btn btn-primary" (click)="updateOperation(editedOperation)">Submit</button>
