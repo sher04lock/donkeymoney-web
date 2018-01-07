@@ -19,6 +19,7 @@ import { OperationsComponent } from './operations/operations.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OperationsService } from './operations.service';
 import { ActivateComponent } from './activate/activate.component';
+import { fakeBackendProvider } from './FakeBackendInterceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,13 @@ import { ActivateComponent } from './activate/activate.component';
     HttpClientModule,
     NgxDatatableModule,
   ],
-  providers: [AuthenticationService, AuthGuardService, MessageService, OperationsService],
+  providers: [
+    AuthenticationService,
+    AuthGuardService,
+    MessageService,
+    OperationsService,
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
