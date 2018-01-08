@@ -42,14 +42,15 @@ export class AuthenticationService {
 
       return this.httpClient.post<AuthResponse>("https://cors-anywhere.herokuapp.com/" + tokenUrl, body, {
         params: {
-          "grantType": "password",
-          "clientId": "3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQvA7WINR",
-          "clientSecret": "6219607681359612175",
+          "grant_type": "password",
+          "client_id": "3MVG9I5UQ_0k_hTmeUVaC9dV..3UNitxbLQLxfExl29fGl_FI1zXAj9B1GP2CnxBLnY4AOaCBySAZw7BOhSvm",
+          "client_secret": "7854954256455050410",
           "username": "donkeymoneyapp@gmail.com",
           "password": "12345678fCX9cOnMr0HEccp3xWqNZsdpv"
         },
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Requested-With": "web"
         }
       });
     })
