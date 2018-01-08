@@ -4,6 +4,8 @@ import { RouterModule } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 
+import { PrettyDateFormat } from "./_pipes/pretty-date-format";
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from "./authentication.service";
@@ -32,6 +34,7 @@ import { fakeBackendProvider } from './FakeBackendInterceptor';
     MessagesComponent,
     OperationsComponent,
     ActivateComponent,
+    PrettyDateFormat
   ],
   imports: [
     BrowserModule,

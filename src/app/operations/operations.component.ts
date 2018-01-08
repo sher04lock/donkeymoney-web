@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Operation } from '../operation';
-import * as moment from 'moment';
-import { OperationsService } from '../operations.service';
 import { concat } from 'rxjs/operators/concat';
+import * as moment from 'moment';
+import { Operation } from '../operation';
+import { OperationsService } from '../operations.service';
 
 @Component({
   selector: 'app-operations',
