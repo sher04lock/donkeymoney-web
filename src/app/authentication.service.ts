@@ -11,6 +11,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { User } from './user';
 import { MessageService } from './message.service';
 import { AuthResponse } from './authResponse';
+import { HttpParams } from '@angular/common/http/src/params';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,9 +37,21 @@ export class AuthenticationService {
     return this.getSecurityToken(user).flatMap(response => {
       const token = response.body;
       // tslint:disable-next-line:max-line-length
-      const tokenUrl = `https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..3UNitxbLQLxfExl29fGl_FI1zXAj9B1GP2CnxBLnY4AOaCBySAZw7BOhSvm&client_secret=7854954256455050410&username=${user.email}&password=${user.password}${token}`;
+      // const tokenUrl = `https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..3UNitxbLQLxfExl29fGl_FI1zXAj9B1GP2CnxBLnY4AOaCBySAZw7BOhSvm&client_secret=7854954256455050410&username=${user.email}&password=${user.password}${token}`;
+      const tokenUrl = `https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token`;
 
-      return this.httpClient.post<AuthResponse>(tokenUrl, body, httpOptions);
+      return this.httpClient.post<AuthResponse>("https://cors-anywhere.herokuapp.com/" + tokenUrl, body, {
+        params: {
+          "grantType": "password",
+          "clientId": "3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQvA7WINR",
+          "clientSecret": "6219607681359612175",
+          "username": "donkeymoneyapp@gmail.com",
+          "password": "12345678fCX9cOnMr0HEccp3xWqNZsdpv"
+        },
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     })
       .pipe(
       tap(response => {
