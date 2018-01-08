@@ -1,10 +1,12 @@
+import { Tag } from "./tag";
+
 export class Operation {
-    id?: number;
-    name?: string;
-    userId?: string;
-    familyId?: number;
-    amount?: number;
-    createdAt?: string;
-    category?: string;
+    id: string;
+    name: string;
+    userId: string;
+    familyId?: string;
+    amount: number;
+    createdAt: string;
+    tag?: Tag;
     description?: string;
 }

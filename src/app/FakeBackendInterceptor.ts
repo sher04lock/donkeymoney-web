@@ -9,17 +9,13 @@ import 'rxjs/add/operator/materialize';
 import 'rxjs/add/operator/dematerialize';
 import { Operation } from './operation';
 import * as moment from 'moment';
+import { MOCK_DATA } from './mock-data';
 
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
-    OPERATIONS: Operation[] = [
-        { id: 1, amount: 12.00, description: "zapieksy", createdAt: moment().format("YYYY-MM-DD hh:mm:ss").toString() },
-        { id: 2, amount: 100.12, description: "kosmetyki" },
-        { id: 3, amount: 15.99, description: "cukierki", createdAt: "czwartek 9:32" },
-        { id: 4, amount: 25.00, description: "pizza", createdAt: "piatek 1:30" },
-    ];
+    OPERATIONS: Operation[] = MOCK_DATA;
 
     constructor() { }
 
@@ -50,17 +46,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // }
 
             // get operations
-            if (request.url.endsWith("/operation") && request.method === 'GET') {
-                if (request.headers.get('Authorization').startsWith("Bearer ")) {
-                    console.log(request.params.get("last"));
-                    console.log(request.params.get("newerThan"));
-                    console.log(request.params.get("olderThan"));
-                    return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return Observable.throw('Unauthorised');
-                }
-            }
+            // if (request.url.endsWith("/operation") && request.method === 'GET') {
+            //     if (request.headers.get('Authorization').startsWith("Bearer ")) {
+            //         console.log(request.params.get("last"));
+            //         console.log(request.params.get("newerThan"));
+            //         console.log(request.params.get("olderThan"));
+            //         return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
+            //     } else {
+            //         // return 401 not authorised if token is null or invalid
+            //         return Observable.throw('Unauthorised');
+            //     }
+            // }
 
             // get operation by id
             if (request.url.match(/operation\/\d+$/) && request.method === 'GET') {
@@ -69,7 +65,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     // find user by id in users array
                     let urlParts = request.url.split('/');
                     let id = parseInt(urlParts[urlParts.length - 1]);
-                    let matchedOperations = this.OPERATIONS.filter(op => op.id === id);
+                    let matchedOperations = this.OPERATIONS.filter(op => +op.id === id);
                     let operation = matchedOperations.length ? matchedOperations[0] : null;
 
                     return Observable.of(new HttpResponse({ status: 200, body: operation }));
@@ -85,7 +81,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 if (request.headers.get('Authorization').startsWith("Bearer ")) {
                     // find user by id in users array
                     let urlParts = request.url.split('/');
-                    let id = parseInt(urlParts[urlParts.length - 1]);
+                    let id = urlParts[urlParts.length - 1];
                     const index = this.OPERATIONS.map(x => x.id).indexOf(id);
                     if (index !== -1) {
                         this.OPERATIONS.splice(index, 1);
@@ -97,11 +93,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             }
 
-             // TODO: fix deleting
+            // TODO: fix deleting
             // delete operation
             if (request.url.endsWith("/operation") && request.method === 'DELETE') {
                 if (request.headers.get('Authorization').startsWith("Bearer ")) {
-                    let id = +request.params.get("id");
+                    let id = request.params.get("id");
                     const index = this.OPERATIONS.map(x => x.id).indexOf(id);
                     if (index !== -1) {
                         this.OPERATIONS.splice(index, 1);
@@ -139,7 +135,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             }
 
-           
+
 
 
 

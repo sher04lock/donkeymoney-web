@@ -14,7 +14,7 @@
       <tbody>
         <tr *ngFor="let operation of operations">
           <td class="col-md-1">{{ operation.id }}</td>
-          <td class="col-md-1">{{ operation.amount | currency:'PLN':true:'1.0-2' }}</td>
+          <td class="col-md-1">{{ operation.amount | number:'1.2-2' }} zł</td>
           <td class="col-md-4">{{ operation.description }}</td>
           <td class="col-md-1">{{ operation.createdAt }}</td>
           <td class="col-md-1">

@@ -1,26 +1,22 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 import { Observable } from "rxjs/Observable";
 import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { JwtHelper } from 'angular2-jwt';
+import { config } from './config';
 
 import { User } from './user';
-import { MessageService } from './message.service';
 import { AuthResponse } from './authResponse';
-import { HttpParams } from '@angular/common/http/src/params';
+import { MessageService } from './message.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 @Injectable()
 export class AuthenticationService {
-
-  private authUrl = 'https://osiol-test.herokuapp.com/login';
-  private securityTokenUrl = "https://donkeymoney.herokuapp.com/api/user/securityToken";
 
   private authTemplate: string;
   private token: string;
@@ -35,18 +31,12 @@ export class AuthenticationService {
     let self = this;
 
     return this.getSecurityToken(user).flatMap(response => {
-      const token = response.body;
-      // tslint:disable-next-line:max-line-length
-      // const tokenUrl = `https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..3UNitxbLQLxfExl29fGl_FI1zXAj9B1GP2CnxBLnY4AOaCBySAZw7BOhSvm&client_secret=7854954256455050410&username=${user.email}&password=${user.password}${token}`;
-      const tokenUrl = `https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token`;
-
-      return this.httpClient.post<AuthResponse>("https://cors-anywhere.herokuapp.com/" + tokenUrl, body, {
+      const url = `${config.API_URL}/services/oauth2/token`;
+      return this.httpClient.post<AuthResponse>(url, body, {
         params: {
-          "grant_type": "password",
-          "client_id": "3MVG9I5UQ_0k_hTmeUVaC9dV..3UNitxbLQLxfExl29fGl_FI1zXAj9B1GP2CnxBLnY4AOaCBySAZw7BOhSvm",
-          "client_secret": "7854954256455050410",
-          "username": "donkeymoneyapp@gmail.com",
-          "password": "12345678fCX9cOnMr0HEccp3xWqNZsdpv"
+          ...config.sf_client,
+          "username": user.email,
+          "password": user.password + response.securityToken
         },
         headers: {
           "Content-Type": "application/json",
@@ -70,9 +60,9 @@ export class AuthenticationService {
 
   private getSecurityToken(user: User) {
     const body = JSON.stringify({ email: user.email, password: user.password });
-    let self = this;
+    const url = `${config.ACTIVATE_URL}/securityToken`;
     return this.httpClient
-      .post(this.securityTokenUrl, body, { ...httpOptions, observe: 'response', responseType: 'text' });
+      .post<{securityToken: string}>(url, body, httpOptions);
   }
 
   register(user: User) {
@@ -89,9 +79,9 @@ export class AuthenticationService {
   }
 
   activate(user: User, token: string) {
-    const activateUrl = "https://donkeymoney.herokuapp.com/api/user/registration";
+    const url = `${config.ACTIVATE_URL}/registration`;
     const body = JSON.stringify({ email: user.email, password: user.password, securityToken: token });
-    return this.httpClient.post(activateUrl, body, httpOptions);
+    return this.httpClient.post(url, body, httpOptions);
   }
 
   getToken(): string {

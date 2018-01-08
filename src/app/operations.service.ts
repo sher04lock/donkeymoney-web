@@ -7,8 +7,7 @@ import { HttpHeaderResponse } from '@angular/common/http/src/response';
 import { AuthenticationService } from './authentication.service';
 import { retry } from 'rxjs/operators/retry';
 import { httpFactory } from '@angular/http/src/http_module';
-
-
+import { config } from './config';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,8 +17,7 @@ const httpOptions = {
 @Injectable()
 export class OperationsService {
   private operations: Operation[];
-  private BASE_URL = "https://donkeymoney-dev-ed.my.salesforce.com/services/apexrest/";
-  private OPERATION_URL = this.BASE_URL + "operation";
+  private url = config.API_URL + "/services/apexrest/operation";
 
   constructor(
     private httpClient: HttpClient,
@@ -32,36 +30,33 @@ export class OperationsService {
   }
 
   addOperation(operation: Operation) {
-
     this.appendTokenToHeaders();
-    return this.httpClient.post(this.OPERATION_URL, operation, httpOptions);
+    return this.httpClient.post(this.url, operation, httpOptions);
 
   }
 
   updateOperation(operation: Operation) {
     this.appendTokenToHeaders();
-    return this.httpClient.put(this.OPERATION_URL, operation, httpOptions);
+    return this.httpClient.put(this.url, operation, httpOptions);
   }
 
   deleteOperation(operation: Operation) {
     this.appendTokenToHeaders();
-    return this.httpClient.delete<Operation>(`${this.OPERATION_URL}/${operation.id}`, httpOptions);
+    return this.httpClient.delete<Operation>(`${this.url}/${operation.id}`, httpOptions);
   }
 
-  getOperations(last: number, olderThan: string, newerThan: string) {
+  getOperations(last: number) {
     httpOptions.params = new HttpParams()
-      .set('last', last.toString())
-      .set('olderThan', olderThan)
-      .set('newerThan', newerThan);
+      .set('last', last.toString());
 
     this.appendTokenToHeaders();
 
-    return this.httpClient.get<Operation[]>(this.OPERATION_URL, httpOptions);
+    return this.httpClient.get<Operation[]>(this.url, httpOptions);
   }
 
   getOperation(operation: Operation) {
     this.appendTokenToHeaders();
-    return this.httpClient.get<Operation>(`${this.OPERATION_URL}/${operation.id}`, httpOptions);
+    return this.httpClient.get<Operation>(`${this.url}/${operation.id}`, httpOptions);
   }
 
   appendTokenToHeaders() {

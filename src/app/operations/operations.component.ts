@@ -17,8 +17,8 @@ export class OperationsComponent implements OnInit {
   operationForm = false;
   editOperationForm = false;
   isNewForm: boolean;
-  newOperation: Operation = {};
-  editedOperation: Operation = {};
+  newOperation: Operation;
+  editedOperation: Operation;
 
   constructor(private operationService: OperationsService) { }
 
@@ -26,20 +26,17 @@ export class OperationsComponent implements OnInit {
     this.getOperations();
   }
 
-  getOperations(
-    last = 15,
-    olderThan = moment().format("YYYY-MM-DD HH:mm:ss"),
-    newerThan = moment().subtract(1, "year").format("YYYY-MM-DD HH:mm:ss")) {
+  getOperations(last = 15) {
     // TODO: change parameters to fetch operations
 
-    this.operationService.getOperations(last, olderThan, newerThan)
+    this.operationService.getOperations(last)
       .subscribe(operations => this.operations = operations);
   }
 
-  getOperation(id: number) {
+  getOperation(id: string) {
     let result: Operation;
     let operation = new Operation();
-    operation.id = 2;
+    operation.id = id;
     this.operationService.getOperation(operation)
       .subscribe(op => { result = op; console.log(op); });
     return result;
@@ -57,7 +54,7 @@ export class OperationsComponent implements OnInit {
   showAddOperationForm() {
     // resets form if edited operation
     if (this.operations.length) {
-      this.newOperation = {};
+      this.newOperation = new Operation();
     }
     this.operationForm = true;
     this.isNewForm = true;
@@ -66,7 +63,7 @@ export class OperationsComponent implements OnInit {
   saveOperation(operation: Operation) {
     if (this.isNewForm) {
       // add a new operation
-      let lastId = Math.max(...this.operations.map(op => op.id));
+      let lastId = Math.max(...this.operations.map(op => +op.id));
       let newOperation = { id: ++lastId, ...operation };
 
       this.operationService.addOperation(newOperation)
@@ -89,17 +86,17 @@ export class OperationsComponent implements OnInit {
     this.operationService.updateOperation(this.editedOperation)
       .subscribe(() => {
         this.editOperationForm = false;
-        this.editedOperation = {};
+        this.editedOperation = new Operation();
       });
   }
 
   cancelNewOperation() {
-    this.newOperation = {};
+    this.newOperation = new Operation();
     this.operationForm = false;
   }
 
   cancelEdits() {
-    this.editedOperation = {};
+    this.editedOperation = new Operation();
     this.editOperationForm = false;
   }
 
