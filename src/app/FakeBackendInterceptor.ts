@@ -76,64 +76,49 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             // delete operation by id
-            if (request.url.match(/operation\/\d+$/) && request.method === 'DELETE') {
-                // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-                if (request.headers.get('Authorization').startsWith("Bearer ")) {
-                    // find user by id in users array
-                    let urlParts = request.url.split('/');
-                    let id = urlParts[urlParts.length - 1];
-                    const index = this.OPERATIONS.map(x => x.id).indexOf(id);
-                    if (index !== -1) {
-                        this.OPERATIONS.splice(index, 1);
-                    }
-                    return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return Observable.throw('Unauthorised');
-                }
-            }
+            // if (request.url.match(/operation\/\d+$/) && request.method === 'DELETE') {
+            //     // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+            //     if (request.headers.get('Authorization').startsWith("Bearer ")) {
+            //         // find user by id in users array
+            //         let urlParts = request.url.split('/');
+            //         let id = urlParts[urlParts.length - 1];
+            //         const index = this.OPERATIONS.map(x => x.id).indexOf(id);
+            //         if (index !== -1) {
+            //             this.OPERATIONS.splice(index, 1);
+            //         }
+            //         return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
+            //     } else {
+            //         // return 401 not authorised if token is null or invalid
+            //         return Observable.throw('Unauthorised');
+            //     }
+            // }
 
-            // TODO: fix deleting
-            // delete operation
-            if (request.url.endsWith("/operation") && request.method === 'DELETE') {
-                if (request.headers.get('Authorization').startsWith("Bearer ")) {
-                    let id = request.params.get("id");
-                    const index = this.OPERATIONS.map(x => x.id).indexOf(id);
-                    if (index !== -1) {
-                        this.OPERATIONS.splice(index, 1);
-                    }
-                    return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return Observable.throw('Unauthorised');
-                }
-            }
 
 
             // post operation
-            if (request.url.endsWith("/operation") && request.method === 'POST') {
-                if (request.headers.get('Authorization').startsWith("Bearer ")) {
-                    console.log(request.body);
-                    this.OPERATIONS.push(request.body);
-                    return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return Observable.throw('Unauthorised');
-                }
-            }
+            // if (request.url.endsWith("/operation") && request.method === 'POST') {
+            //     if (request.headers.get('Authorization').startsWith("Bearer ")) {
+            //         console.log(request.body);
+            //         this.OPERATIONS.push(request.body);
+            //         return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
+            //     } else {
+            //         // return 401 not authorised if token is null or invalid
+            //         return Observable.throw('Unauthorised');
+            //     }
+            // }
 
             // put (update) operation
-            if (request.url.endsWith("/operation") && request.method === 'PUT') {
-                if (request.headers.get('Authorization').startsWith("Bearer ")) {
-                    let operation = request.body;
-                    const index = this.OPERATIONS.map(x => x.id).indexOf(operation.id);
-                    this.OPERATIONS[index] = operation;
-                    return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return Observable.throw('Unauthorised');
-                }
-            }
+            // if (request.url.endsWith("/operation") && request.method === 'PUT') {
+            //     if (request.headers.get('Authorization').startsWith("Bearer ")) {
+            //         let operation = request.body;
+            //         const index = this.OPERATIONS.map(x => x.id).indexOf(operation.id);
+            //         this.OPERATIONS[index] = operation;
+            //         return Observable.of(new HttpResponse({ status: 200, body: this.OPERATIONS }));
+            //     } else {
+            //         // return 401 not authorised if token is null or invalid
+            //         return Observable.throw('Unauthorised');
+            //     }
+            // }
 
 
 

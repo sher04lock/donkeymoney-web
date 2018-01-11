@@ -1,11 +1,47 @@
 <div class="container" style="background-color: white; margin-top: 20px">
   <div class="col-md-12">
-    <h1>Your expenses</h1>
+
+    <form *ngIf="!editOperationForm">
+      <h3>Add new one:</h3>
+      <div class="col-md-6">
+
+        Amount:
+        <input class="form-control" type="text" name="amount" placeholder="amount" [(ngModel)]="newOperation.amount" /> Category:
+        <input class="form-control" type="text" name="category" placeholder="category" [(ngModel)]="newOperation.category" /> Description:
+        <input class="form-control" type="text" name="name" placeholder="description" size="50" [(ngModel)]="newOperation.name" />
+        <br>
+
+        <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Add</button>
+        <button type="button" class="btn btn-warning" (click)="cancelNewOperation()">Cancel</button>
+      </div>
+
+      <div class="col-md-6">
+        <h3>Add from file:</h3>
+        <input type="file" #fileInput placeholder="Upload file..." />
+        <br>
+        <button type="button" class="btn btn-primary" (click)="upload()">Upload</button>
+      </div>
+    </form>
+
+    <form *ngIf="editOperationForm">
+      <div class="col-md-6">
+        <h3>Edit:</h3>
+
+        <input class="form-control" type="text" name="amount" placeholder="amount" [(ngModel)]="editedOperation.amount" />
+        <input class="form-control" type="text" name="category" placeholder="category" [(ngModel)]="editedOperation.category" />
+        <input class="form-control" type="text" name="name" placeholder="description" size="50" [(ngModel)]="editedOperation.name"
+        />
+        <br>
+        <button type="button" class="btn btn-primary" (click)="updateOperation(editedOperation)">Submit</button>
+        <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+      </div>
+    </form>
+    <br>
     <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
-          <th class="text-center">ID</th>
           <th class="text-center">Amount</th>
+          <th class="text-center">Category</th>
           <th class="text-center">Description</th>
           <th class="text-center">Date</th>
           <th class="text-center">&nbsp;</th>
@@ -13,8 +49,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let operation of operations">
-          <td class="col-md-1">{{ operation.id }}</td>
           <td class="col-md-1">{{ operation.amount | number:'1.2-2' }} zł</td>
+          <td class="col-md-1">{{ operation.category }}</td>
           <td class="col-md-4">{{ operation.name }}</td>
           <td class="col-md-1">{{ operation.createdAt | prettyDateFormat}}</td>
           <td class="col-md-1">
@@ -28,45 +64,5 @@
         </tr>
       </tbody>
     </table>
-
-    <button class="btn btn-success" (click)="showAddOperationForm()">
-      <i class="fa fa-plus"></i>
-    </button>
-    <br />
-    <br />
-
-    <form *ngIf="operationForm">
-      <h2>Add New Operation</h2>
-      <p>Amount:
-        <input type="text" name="amount" [(ngModel)]="newOperation.amount" />
-      </p>
-      <p>Description:
-        <input type="text" name="name" [(ngModel)]="newOperation.name" />
-      </p>
-      <p>Date:
-        <input type="text" name="createdAt" [(ngModel)]="newOperation.createdAt" />
-      </p>
-      <p>
-        <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Submit</button>
-        <button type="button" class="btn btn-warning" (click)="cancelNewOperation()">Cancel</button>
-      </p>
-    </form>
-
-    <form *ngIf="editOperationForm">
-      <h2>Edit Operation Details</h2>
-      <p>Amount:
-        <input type="text" name="amount" [(ngModel)]="editedOperation.amount" />
-      </p>
-      <p>Description:
-        <input type="text" name="name" [(ngModel)]="editedOperation.name" />
-      </p>
-      <p>Date:
-        <input type="text" name="createdAt" [(ngModel)]="editedOperation.createdAt" />
-      </p>
-      <p>
-        <button type="button" class="btn btn-primary" (click)="updateOperation(editedOperation)">Submit</button>
-        <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
-      </p>
-    </form>
   </div>
 </div>

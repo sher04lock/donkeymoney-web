@@ -1,3 +1,31 @@
-<p>
-  dashboard works!
-</p>
+<div class="col-md-6" style="background-color: white; margin-top: 20px">
+  <div class="col-md-12">
+    <h2>Summary</h2>
+    <div>
+      <h3>
+        <b>Total spent:</b>
+      </h3>
+      <h2>{{totalSpent}} zł</h2>
+      <div style="background-color: rgb(235, 235, 235); border-radius: 20px; padding: 10px">
+        <h3>
+          <b>Biggest expense:</b>
+        </h3>
+        <h4>{{biggestExpense.name}} </h4>
+        <h4>{{biggestExpense.amount}} zł</h4>
+        <h4>{{biggestExpense.createdAt | prettyDateFormat}} </h4>
+      </div>
+      <div style="background-color: rgb(252, 202, 173); border-radius: 20px; padding: 10px">
+        <h3>Monthly expenses</h3>
+        <h4>{{monthlyExpenses}}</h4>
+      </div>
+      <div style="background-color: rgb(213, 255, 185); border-radius: 20px; padding: 10px">
+        <h3>Monthly income</h3>
+        <h4>{{monthlyIncome}}</h4>
+      </div>
+      <div style="background-color: rgb(166, 212, 255); border-radius: 20px; padding: 10px">
+        <h3>Monthly budget</h3>
+        <h4>{{monthlyBudget}}</h4>
+      </div>
+    </div>
+  </div>
+</div>

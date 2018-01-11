@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { concat } from 'rxjs/operators/concat';
 import * as moment from 'moment';
 import { Operation } from '../operation';
 import { OperationsService } from '../operations.service';
+import { containsTree } from '@angular/router/src/url_tree';
 
 @Component({
   selector: 'app-operations',
@@ -17,8 +18,10 @@ export class OperationsComponent implements OnInit {
   operationForm = false;
   editOperationForm = false;
   isNewForm: boolean;
-  newOperation: Operation;
-  editedOperation: Operation;
+  newOperation = new Operation();
+  editedOperation = new Operation();
+
+  @ViewChild('fileInput') fileInput;
 
   constructor(private operationService: OperationsService) { }
 
@@ -42,6 +45,67 @@ export class OperationsComponent implements OnInit {
     return result;
   }
 
+  saveOperation(operation: Operation) {
+
+    // add a new operation
+    let newOperation = { ...operation };
+    this.operations.unshift(newOperation);
+    this.operationService.addOperation(newOperation)
+      .subscribe(() => {
+        console.log("Dodano nowy wydatek");
+        // this.operations.unshift(newOperation);
+      });
+
+
+    console.log(this.operations);
+
+    this.operationForm = false;
+  }
+
+  updateOperation() {
+    this.operationService.updateOperation(this.editedOperation)
+      .subscribe(() => {
+        this.editOperationForm = false;
+        this.editedOperation = new Operation();
+      });
+  }
+
+  deleteOperation(operation: Operation) {
+    let self = this;
+    this.operationService.deleteOperation(operation)
+      .subscribe(() => this.operations = this.operations.filter(o => o !== operation));
+  }
+
+  // ------------ file uploading ------------
+  upload() {
+    let fileBrowser = this.fileInput.nativeElement;
+    if (fileBrowser.files && fileBrowser.files[0]) {
+      let file = fileBrowser.files[0];
+      let fileReader = new FileReader();
+      fileReader.readAsText(file);
+      fileReader.onload = (e: any) => {
+        let contents: string = e.target.result;
+        this.operationService.upload(contents).subscribe(() => console.log("uploaded"));
+      };
+      // let formData = new FormData();
+      // formData.append("file", fileBrowser.files[0], "filename");
+
+
+    }
+  }
+
+
+  // ------------ component management ------------
+  cancelNewOperation() {
+    this.newOperation = new Operation();
+    this.operationForm = false;
+  }
+
+  cancelEdits() {
+    this.editedOperation = new Operation();
+    this.editOperationForm = false;
+  }
+
   showEditOperationForm(operation: Operation) {
     if (!operation) {
       this.operationForm = false;
@@ -58,46 +122,6 @@ export class OperationsComponent implements OnInit {
     }
     this.operationForm = true;
     this.isNewForm = true;
-  }
-
-  saveOperation(operation: Operation) {
-    if (this.isNewForm) {
-      // add a new operation
-      let lastId = Math.max(...this.operations.map(op => +op.id));
-      let newOperation = { id: ++lastId, ...operation };
-
-      this.operationService.addOperation(newOperation)
-        .subscribe(() => console.log("Dodano nowy wydatek"));
-
-      this.operations.push(newOperation);
-
-      console.log(this.operations);
-    }
-    this.operationForm = false;
-  }
-
-  deleteOperation(operation: Operation) {
-    let self = this;
-    this.operationService.deleteOperation(operation)
-      .subscribe(() => this.operations = this.operations.filter(o => o !== operation));
-  }
-
-  updateOperation() {
-    this.operationService.updateOperation(this.editedOperation)
-      .subscribe(() => {
-        this.editOperationForm = false;
-        this.editedOperation = new Operation();
-      });
-  }
-
-  cancelNewOperation() {
-    this.newOperation = new Operation();
-    this.operationForm = false;
-  }
-
-  cancelEdits() {
-    this.editedOperation = new Operation();
-    this.editOperationForm = false;
   }
 
 }

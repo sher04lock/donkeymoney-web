@@ -7,7 +7,7 @@
 
   <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Home</a>
   <a routerLink="/operations" routerLinkActive="active" *ngIf="loggedIn">Operations</a>
-  <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Settings</a>
+  <a routerLink="/settings" routerLinkActive="active" *ngIf="loggedIn">Settings</a>
   
   
   <a id="logout" routerLink="/home" routerLinkActive="active" *ngIf="loggedIn" (click)="logout()">Logout</a>
