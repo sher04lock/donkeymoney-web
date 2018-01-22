@@ -10,9 +10,10 @@
         <input class="form-control" type="text" name="category" placeholder="category" [(ngModel)]="newOperation.category" /> Description:
         <input class="form-control" type="text" name="name" placeholder="description" size="50" [(ngModel)]="newOperation.name" />
         <br>
-
-        <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Add</button>
-        <button type="button" class="btn btn-warning" (click)="cancelNewOperation()">Cancel</button>
+        <div style="margin-bottom: 20px">
+          <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Add</button>
+          <button type="button" class="btn btn-warning" (click)="cancelNewOperation()">Cancel</button>
+        </div>
       </div>
 
       <div class="col-md-6">
