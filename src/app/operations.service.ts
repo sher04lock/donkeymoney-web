@@ -34,7 +34,11 @@ export class OperationsService {
     let body = {
       amount: +operation.amount,
       name: operation.name,
-      createdAt: moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]")
+      createdAt: moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]"),
+      tag: {
+        name: null,
+        id: null
+      }
     };
     return this.httpClient.post(this.url, body, { ...httpOptions, responseType: 'text' });
   }
@@ -84,6 +88,6 @@ export class OperationsService {
 
   appendTokenToHeaders() {
     let token = this.authenticationService.getToken();
-    httpOptions.headers = httpOptions.headers.append("Authorization", `Bearer ${token}`);
+    httpOptions.headers = httpOptions.headers.set("Authorization", `Bearer ${token}`);
   }
 }
