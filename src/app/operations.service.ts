@@ -34,13 +34,13 @@ export class OperationsService {
     let body = {
       amount: +operation.amount,
       name: operation.name,
-      createdAt: moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]"),
+      // createdAt: moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]"),
       tag: {
         name: null,
         id: null
       }
     };
-    return this.httpClient.post(this.url, body, { ...httpOptions, responseType: 'text' });
+    return this.httpClient.post(this.url, {...body}, { ...httpOptions, responseType: 'text' });
   }
 
   upload(content: string, bankName = "Millenium") {
@@ -63,6 +63,7 @@ export class OperationsService {
       id: operation.id,
       amount: +operation.amount,
       name: operation.name,
+      createdAt: operation.createdAt
     };
     return this.httpClient.put(this.url, body, { ...httpOptions, responseType: 'text' });
   }

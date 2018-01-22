@@ -38,6 +38,10 @@ export class DashboardComponent implements OnInit {
           .filter(x => x < 0)
           .reduce((x, y) => x + y, 0);
 
+        if (this.monthlyIncome < 0) {
+          this.monthlyIncome *= -1;
+        }
+
         this.monthlyBudget = this.monthlyIncome - this.monthlyExpenses;
       });
   }

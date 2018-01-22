@@ -49,6 +49,8 @@ export class OperationsComponent implements OnInit {
 
     // add a new operation
     let newOperation = { ...operation };
+    // 2018-12-01T13:42:33.000Z
+    newOperation.createdAt = moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]");
     this.operations.unshift(newOperation);
     this.operationService.addOperation(newOperation)
       .subscribe(() => {
@@ -63,6 +65,13 @@ export class OperationsComponent implements OnInit {
   }
 
   updateOperation() {
+
+    let ids = this.operations.map(x => x.id);
+    let index = ids.indexOf(this.editedOperation.id);
+
+    this.operations[index] = { ...this.operations[index], ...this.editedOperation };
+
+
     this.operationService.updateOperation(this.editedOperation)
       .subscribe(() => {
         this.editOperationForm = false;
@@ -72,8 +81,9 @@ export class OperationsComponent implements OnInit {
 
   deleteOperation(operation: Operation) {
     let self = this;
+    this.operations = this.operations.filter(o => o !== operation);
     this.operationService.deleteOperation(operation)
-      .subscribe(() => this.operations = this.operations.filter(o => o !== operation));
+      .subscribe(() => console.log(`deleted op. id: ${operation.id}`));
   }
 
   // ------------ file uploading ------------
