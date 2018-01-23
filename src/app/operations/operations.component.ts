@@ -20,6 +20,7 @@ export class OperationsComponent implements OnInit {
   isNewForm: boolean;
   newOperation = new Operation();
   editedOperation = new Operation();
+  isIncome = false;
 
   @ViewChild('fileInput') fileInput;
 
@@ -49,6 +50,10 @@ export class OperationsComponent implements OnInit {
 
     // add a new operation
     let newOperation = { ...operation };
+
+    if (!this.isIncome) {
+      newOperation.amount *= -1;
+    }
     // 2018-12-01T13:42:33.000Z
     newOperation.createdAt = moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]");
     this.operations.unshift(newOperation);
@@ -132,6 +137,11 @@ export class OperationsComponent implements OnInit {
     }
     this.operationForm = true;
     this.isNewForm = true;
+  }
+
+  toggleType() {
+    this.isIncome = !this.isIncome;
+    console.log(this.isIncome);
   }
 
 }

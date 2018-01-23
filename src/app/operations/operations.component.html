@@ -7,8 +7,9 @@
 
         Amount:
         <input class="form-control" type="text" name="amount" placeholder="amount" [(ngModel)]="newOperation.amount" /> Category:
-        <input class="form-control" type="text" name="category" placeholder="category" [(ngModel)]="newOperation.category" /> Description:
+        <input class="form-control" type="text" name="category" placeholder="category" [(ngModel)]="newOperation.tag.name" /> Description:
         <input class="form-control" type="text" name="name" placeholder="description" size="50" [(ngModel)]="newOperation.name" />
+        <label class="checkbox-inline"><input type="checkbox" value="" (click)="toggleType()">It's an income</label>
         <br>
         <div style="margin-bottom: 20px">
           <button type="button" class="btn btn-primary" (click)="saveOperation(newOperation)">Add</button>
@@ -29,7 +30,6 @@
         <h3>Edit:</h3>
 
         <input class="form-control" type="text" name="amount" placeholder="amount" [(ngModel)]="editedOperation.amount" />
-        <input class="form-control" type="text" name="category" placeholder="category" [(ngModel)]="editedOperation.category" />
         <input class="form-control" type="text" name="name" placeholder="description" size="50" [(ngModel)]="editedOperation.name"
         />
         <br>
