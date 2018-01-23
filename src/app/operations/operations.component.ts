@@ -51,6 +51,7 @@ export class OperationsComponent implements OnInit {
     // add a new operation
     let newOperation = { ...operation };
 
+    newOperation.amount = Math.abs(newOperation.amount);
     if (!this.isIncome) {
       newOperation.amount *= -1;
     }

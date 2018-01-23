@@ -30,19 +30,15 @@ export class DashboardComponent implements OnInit {
         let expensesFromLastMonth = this.operations.filter(o => this.getCreationMonth(o.createdAt) === (date.getMonth() + 1));
         this.monthlyExpenses = expensesFromLastMonth
           .map(o => o.amount)
-          .filter(x => x > 0)
+          .filter(x => x < 0)
           .reduce((x, y) => x + y, 0);
 
         this.monthlyIncome = expensesFromLastMonth
           .map(o => o.amount)
-          .filter(x => x < 0)
+          .filter(x => x > 0)
           .reduce((x, y) => x + y, 0);
 
-        if (this.monthlyIncome < 0) {
-          this.monthlyIncome *= -1;
-        }
-
-        this.monthlyBudget = this.monthlyIncome - this.monthlyExpenses;
+        this.monthlyBudget = this.monthlyIncome + this.monthlyExpenses;
       });
   }
 

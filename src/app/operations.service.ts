@@ -51,7 +51,6 @@ export class OperationsService {
     this.appendTokenToHeaders();
     let headers = httpOptions.headers
       .set("Content-Type", "text/csv")
-      .set("Accept-Charset", "UTF-8")
       .set("Accept", "application/json")
       .set("Bank-Name", bankName);
 
