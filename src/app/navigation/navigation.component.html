@@ -3,11 +3,9 @@
   <a routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</a>
   <a routerLink="/login" routerLinkActive="active" *ngIf="!loggedIn">Login</a>
   <a routerLink="/register" routerLinkActive="active" *ngIf="!loggedIn">Register</a>
-  <a routerLink="/activate" routerLinkActive="active" *ngIf="!loggedIn">Activate account</a>
 
   <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Home</a>
   <a routerLink="/operations" routerLinkActive="active" *ngIf="loggedIn">Operations</a>
-  <a routerLink="/settings" routerLinkActive="active" *ngIf="loggedIn">Settings</a>
   
   
   <a id="logout" routerLink="/home" routerLinkActive="active" *ngIf="loggedIn" (click)="logout()">Logout</a>
