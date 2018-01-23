@@ -8,4 +8,8 @@ export class Operation {
     familyId?: string;
     createdAt: string;
     tag?: Tag;
+
+    constructor() {
+        this.tag = new Tag();
+    }
 }

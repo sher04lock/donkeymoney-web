@@ -8,6 +8,7 @@ import { AuthenticationService } from './authentication.service';
 import { retry } from 'rxjs/operators/retry';
 import { httpFactory } from '@angular/http/src/http_module';
 import { config } from './config';
+import { Tag } from './tag';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -30,17 +31,18 @@ export class OperationsService {
   }
 
   addOperation(operation: Operation) {
-    this.appendTokenToHeaders();
-    let body = {
-      amount: +operation.amount,
-      name: operation.name,
-      // createdAt: moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]"),
-      tag: {
-        name: null,
-        id: null
-      }
-    };
-    return this.httpClient.post(this.url, {...body}, { ...httpOptions, responseType: 'text' });
+
+    return this.addTag(operation.tag.name).flatMap(tag => {
+      let body = {
+        amount: +operation.amount,
+        name: operation.name,
+        tag: {
+          name: tag.name,
+          id: tag.id
+        }
+      };
+      return this.httpClient.post(this.url, { ...body }, { ...httpOptions, responseType: 'text' });
+    });
   }
 
   upload(content: string, bankName = "Millenium") {
@@ -53,7 +55,7 @@ export class OperationsService {
       .set("Accept", "application/json")
       .set("Bank-Name", bankName);
 
-      console.log(content);
+    console.log(content);
     return this.httpClient.post(url, content, { headers });
   }
 
@@ -87,6 +89,21 @@ export class OperationsService {
     return this.httpClient.get<Operation>(`${this.url}/${operation.id}`, httpOptions);
   }
 
+  getTags() {
+    let url = config.API_URL + "/services/apexrest/tag";
+    this.appendTokenToHeaders();
+    return this.httpClient.get<Tag[]>(url, httpOptions);
+  }
+
+  addTag(name: string) {
+    let url = config.API_URL + "/services/apexrest/tag";
+    let body = {
+      name: name
+    };
+    this.appendTokenToHeaders();
+    return this.httpClient.post<Tag>(url, body, httpOptions);
+
+  }
   appendTokenToHeaders() {
     let token = this.authenticationService.getToken();
     httpOptions.headers = httpOptions.headers.set("Authorization", `Bearer ${token}`);
