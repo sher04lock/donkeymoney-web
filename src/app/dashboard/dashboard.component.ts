@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
           .map(op => op.amount)
           .reduce((x, y) => x + y, 0);
 
-        this.biggestExpense = this.operations.reduce((x, y) => x.amount > y.amount ? x : y, this.biggestExpense);
+        this.biggestExpense = this.operations.reduce((x, y) => x.amount < y.amount ? x : y, this.biggestExpense);
         let date = new Date();
         let expensesFromLastMonth = this.operations.filter(o => this.getCreationMonth(o.createdAt) === (date.getMonth() + 1));
         this.monthlyExpenses = expensesFromLastMonth
@@ -54,6 +54,4 @@ export class DashboardComponent implements OnInit {
   getCreationDay(date: string) {
     return +date.substr(8, 2);
   }
-
-
 }
