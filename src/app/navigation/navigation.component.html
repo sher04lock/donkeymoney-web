@@ -1,11 +1,10 @@
 
 <nav>
-  <a routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</a>
-  <a routerLink="/login" routerLinkActive="active" *ngIf="!loggedIn">Login</a>
-  <a routerLink="/register" routerLinkActive="active" *ngIf="!loggedIn">Register</a>
+  <a id="home" routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</a>
+  <a id="login" routerLink="/login" routerLinkActive="active" *ngIf="!loggedIn">Login</a>
 
-  <a routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Home</a>
-  <a routerLink="/operations" routerLinkActive="active" *ngIf="loggedIn">Operations</a>
+  <a id="dashboard" routerLink="/dashboard" routerLinkActive="active" *ngIf="loggedIn">Home</a>
+  <a id="operations" routerLink="/operations" routerLinkActive="active" *ngIf="loggedIn">Operations</a>
   
   
   <a id="logout" routerLink="/home" routerLinkActive="active" *ngIf="loggedIn" (click)="logout()">Logout</a>
