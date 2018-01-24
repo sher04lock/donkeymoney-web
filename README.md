@@ -1,27 +1,25 @@
-# WebApp
+# DonkeyMoney web app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+Web client for Donkey Money app written in Angular 5.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Running app
 
-## Code scaffolding
+It couldn't be easier than that! Just navigate to [http://donkeymoney.gq](https://donkeymoney.gq).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To run locally, you'll have to:
+1. Ensure you have Node.js installed,
+2. Clone repository
+3. `npm install` to install everything that's needed
+4. `ng serve` to run dev server
+5. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+Or, to speed up things a little bit:
+1. `npm i -g protractor`
+2. `webdriver-manager updater`
+3. Run tests with `protractor ./protractor.conf.js`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
