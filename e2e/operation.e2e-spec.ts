@@ -1,5 +1,5 @@
 import { AppPage } from './app.po';
-import { element, by, $, browser } from 'protractor';
+import { element, by, $, $$, browser, ExpectedConditions as until } from 'protractor';
 
 describe('web-app App', () => {
   let page: AppPage;
@@ -10,18 +10,35 @@ describe('web-app App', () => {
 
   it('should login', () => {
     page.navigateTo();
-    element(by.id('email')).sendKeys('test@gmail.com');
-    element(by.id('password')).sendKeys('pass');
+    element(by.id('email')).sendKeys('donkeymoneyapp@gmail.com');
+    element(by.id('password')).sendKeys('12345678');
     $('.btn.btn-success').click();
-    expect(element(by.id('logout')).isDisplayed()).toBe(true);
+    browser.wait(until.visibilityOf(element(by.id('logout'))), 25 * 1000);
   });
 
   it('should add new expense', () => {
-    browser.get('https://donkeymoney-app.herokuapp.com/operations');
-    $('.btn.btn-success').click();
-    element(by.name("amount")).sendKeys(10.00);
-    element(by.name("description")).sendKeys("e2e");
+    element(by.id('operations')).click();
+    element(by.name("amount")).sendKeys(1.23);
+    element(by.name("name")).sendKeys("e2e");
     $('.btn.btn-primary').click();
     browser.driver.sleep(2 * 1000);
+  });
+
+  it('should edit expense', () => {
+    $$('.btn.btn-info').first().click();
+    element(by.name("amount")).sendKeys(3.21);
+    element(by.name("name")).sendKeys("e2e update");
+    $('.btn.btn-primary').click();
+    browser.driver.sleep(2 * 1000);
+  });
+
+  it('should delete expense', () => {
+    $$('.btn.btn-danger').first().click();
+    browser.driver.sleep(2 * 1000);
+  });
+
+  it('should logout', () => {
+    element(by.id('logout')).click();
+    browser.wait(until.visibilityOf(element(by.id("login"))), 25 * 1000);
   });
 });
