@@ -18,7 +18,7 @@ To run locally, you'll have to:
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 Or, to speed up things a little bit:
-1. `npm i -g protractor`
-2. `webdriver-manager updater`
+1. `npm i -g protractor` to install protractor globally 
+2. `webdriver-manager update` to download and/or update browser drivers
 3. Run tests with `protractor ./protractor.conf.js`
 
