@@ -2,7 +2,6 @@
 
 Web client for Donkey Money app written in Angular 5.
 
-
 ## Running app
 
 It couldn't be easier than that! Just navigate to [http://donkeymoney.gq](https://donkeymoney.gq).

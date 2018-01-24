@@ -62,7 +62,7 @@ export class AuthenticationService {
     const body = JSON.stringify({ email: user.email, password: user.password });
     const url = `${config.ACTIVATE_URL}/securityToken`;
     return this.httpClient
-      .post<{securityToken: string}>(url, body, httpOptions);
+      .post<{ securityToken: string }>(url, body, httpOptions);
   }
 
   register(user: User) {
@@ -101,15 +101,6 @@ export class AuthenticationService {
   }
 
   public isAuthenticated(): boolean {
-    // const token = this.getToken();
-    // const jwtHelper = new JwtHelper();
-    // let isTokenExpired;
-    // // Check whether the token is expired and return
-    // // true or false
-    // try {
-    //   isTokenExpired = jwtHelper.isTokenExpired(token);
-    // } catch (e) { isTokenExpired = true; }
-    // return !isTokenExpired;
     return this.getToken().length > 0;
   }
 }

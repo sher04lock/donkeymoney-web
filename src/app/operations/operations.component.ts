@@ -30,9 +30,10 @@ export class OperationsComponent implements OnInit {
     this.getOperations();
   }
 
-  getOperations(last = 15) {
-    // TODO: change parameters to fetch operations
 
+   // ------------ CRUD ------------
+
+  getOperations(last = 50) {
     this.operationService.getOperations(last)
       .subscribe(operations => this.operations = operations);
   }
@@ -47,36 +48,26 @@ export class OperationsComponent implements OnInit {
   }
 
   saveOperation(operation: Operation) {
-
-    // add a new operation
     let newOperation = { ...operation };
 
     newOperation.amount = Math.abs(newOperation.amount);
     if (!this.isIncome) {
       newOperation.amount *= -1;
     }
-    // 2018-12-01T13:42:33.000Z
+
     newOperation.createdAt = moment().format("YYYY-MM-DD[T]HH:mm:ss[.000Z]");
     this.operations.unshift(newOperation);
     this.operationService.addOperation(newOperation)
-      .subscribe(() => {
-        console.log("Dodano nowy wydatek");
-        // this.operations.unshift(newOperation);
-      });
-
-
-    console.log(this.operations);
+      .subscribe(() => { });
 
     this.operationForm = false;
   }
 
   updateOperation() {
-
     let ids = this.operations.map(x => x.id);
     let index = ids.indexOf(this.editedOperation.id);
 
     this.operations[index] = { ...this.operations[index], ...this.editedOperation };
-
 
     this.operationService.updateOperation(this.editedOperation)
       .subscribe(() => {
@@ -92,7 +83,9 @@ export class OperationsComponent implements OnInit {
       .subscribe(() => console.log(`deleted op. id: ${operation.id}`));
   }
 
-  // ------------ file uploading ------------
+  /**
+   * Uploads a csv file with expenses exporter from banks
+   */
   upload() {
     let fileBrowser = this.fileInput.nativeElement;
     if (fileBrowser.files && fileBrowser.files[0]) {
@@ -103,15 +96,11 @@ export class OperationsComponent implements OnInit {
         let contents: string = e.target.result;
         this.operationService.upload(contents).subscribe(() => console.log("uploaded"));
       };
-      // let formData = new FormData();
-      // formData.append("file", fileBrowser.files[0], "filename");
-
-
     }
   }
 
-
   // ------------ component management ------------
+
   cancelNewOperation() {
     this.newOperation = new Operation();
     this.operationForm = false;
@@ -132,7 +121,6 @@ export class OperationsComponent implements OnInit {
   }
 
   showAddOperationForm() {
-    // resets form if edited operation
     if (this.operations.length) {
       this.newOperation = new Operation();
     }
@@ -140,9 +128,11 @@ export class OperationsComponent implements OnInit {
     this.isNewForm = true;
   }
 
+  /**
+   * toggles operetion type: expense <-> income
+   */
   toggleType() {
     this.isIncome = !this.isIncome;
     console.log(this.isIncome);
   }
-
 }

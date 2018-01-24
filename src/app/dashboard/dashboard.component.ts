@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { OperationsService } from '../operations.service';
 import { Operation } from '../operation';
 
+/**
+ * Dashboard component is responsible for displaying user's summary
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,6 +20,10 @@ export class DashboardComponent implements OnInit {
   biggestExpense = new Operation();
   constructor(private operationService: OperationsService) { }
 
+  /**
+   * Angular function called whenever component is created.
+   * It fetches last transactions and displays user overview.
+   */
   ngOnInit() {
     this.operationService.getOperations(100)
       .subscribe(operations => {
@@ -42,7 +49,6 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  // 2017-12-19T13:42:33.000Z
   getCreationYear(date: string) {
     return +date.substr(0, 4);
   }

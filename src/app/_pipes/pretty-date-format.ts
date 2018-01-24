@@ -1,11 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+
+/**
+ * Custom Angular pipe to format date string
+ * 2017-12-19T13:42:33.000Z -> 2017-12-19 at 13:42:33
+ */
 @Pipe({
     name: 'prettyDateFormat'
 })
 export class PrettyDateFormat implements PipeTransform {
     transform(value: string): string {
-        // 2017-12-19T13:42:33.000Z -> 2017-12-19 at 13:42:33
         return `${this.extractDate(value)} at ${this.extractTime(value)}`;
     }
 

@@ -4,25 +4,26 @@ import { RouterModule } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
+
 import { PrettyDateFormat } from "./_pipes/pretty-date-format";
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { AuthenticationService } from "./authentication.service";
-import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthGuardService } from './auth-guard.service';
-import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { MessagesComponent } from './messages/messages.component';
-import { MessageService } from './message.service';
 import { OperationsComponent } from './operations/operations.component';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { OperationsService } from './operations.service';
 import { ActivateComponent } from './activate/activate.component';
-import { fakeBackendProvider } from './FakeBackendInterceptor';
 
+import { AuthenticationService } from "./authentication.service";
+import { AuthGuardService } from './auth-guard.service';
+import { OperationsService } from './operations.service';
+
+/**
+ * Core android app module.
+ */
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,8 +40,7 @@ import { fakeBackendProvider } from './FakeBackendInterceptor';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
-    NgxDatatableModule,
+    HttpClientModule
   ],
   providers: [
     AuthenticationService,
