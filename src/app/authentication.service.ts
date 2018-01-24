@@ -5,12 +5,12 @@ import { Observable } from "rxjs/Observable";
 import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/mergeMap';
 
 import { config } from './config';
 
 import { User } from './user';
 import { AuthResponse } from './authResponse';
-import { MessageService } from './message.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,13 +24,13 @@ export class AuthenticationService {
   private securityToken: string;
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private httpClient: HttpClient, private messageService: MessageService) { }
+  constructor(private httpClient: HttpClient) { }
 
   login(user: User) {
     const body = JSON.stringify({ email: user.email, password: user.password });
     let self = this;
 
-    return this.getSecurityToken(user).flatMap(response => {
+    return this.getSecurityToken(user).mergeMap(response => {
       const url = `${config.API_URL}/services/oauth2/token`;
       return this.httpClient.post<AuthResponse>(url, body, {
         params: {
@@ -68,11 +68,11 @@ export class AuthenticationService {
   register(user: User) {
 
     // TODO: replece url with saleforce endpoint
-    const registerUrl = "https://osiol-test.herokuapp.com/api/users";
+    const url = `${config.ACTIVATE_URL}/register`;
 
     const body = JSON.stringify({ email: user.email, password: user.password });
 
-    return this.httpClient.post(registerUrl, user, { ...httpOptions, observe: 'response', responseType: 'text' })
+    return this.httpClient.post(url, user, { ...httpOptions, observe: 'response', responseType: 'text' })
       .pipe(
       tap(_ => { },
         catchError((error: any) => Observable.throw(error.error || 'Server error'))));

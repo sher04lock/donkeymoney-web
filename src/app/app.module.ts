@@ -31,7 +31,6 @@ import { fakeBackendProvider } from './FakeBackendInterceptor';
     DashboardComponent,
     HomeComponent,
     NavigationComponent,
-    MessagesComponent,
     OperationsComponent,
     ActivateComponent,
     PrettyDateFormat
@@ -46,9 +45,7 @@ import { fakeBackendProvider } from './FakeBackendInterceptor';
   providers: [
     AuthenticationService,
     AuthGuardService,
-    MessageService,
     OperationsService,
-    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
